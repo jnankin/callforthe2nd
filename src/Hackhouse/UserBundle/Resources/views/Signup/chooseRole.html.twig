@@ -1,0 +1,43 @@
+{% extends "HackhousePublicBundle::internalLayout.html.twig" %}
+
+{% block title %} Signup - Choose Role {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/signup.css') }}" />
+{% endblock %}
+
+{% block body%}
+<div class="fullsizeContainer">
+    <div id="chooseRole">
+        <h1>What would you like to do on 10 Minute Dose?</h1>
+        <h3 class="title_blue2">We'll optimize your experience based on your intended use of the site</h3>
+
+        {{ write_flash_block('chooseRole') }}
+
+        <div class="buttonWrapper">
+            <a class="role buttonLink" type="button" href="?role=supporter" style="margin-right: 40px;">
+                <img src="{{ asset('images/call.png') }}" />
+                <h3>Listen to talks and support a friend or family member</h3>
+            </a>
+            <a class="role buttonLink" type="button" href="?role=hcp">
+                <img src="{{ asset('images/newsite.png') }}" />
+                <h3>Create a site for someone with a health challenge</h3>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/libs/jstz.min.js') }}"></script>
+    <script type="text/javascript">
+        $().ready(function(){
+            $.post("{{ path('setUserTimezone') }}", {
+                'timezone' : jstz.determine().name()
+            });
+        });
+    </script>
+{% endblock %}    
+    

@@ -1,0 +1,7 @@
+services:
+    menu_writer:
+        class:        Hackhouse\DynamicMenuBundle\Extensions\MenuWriterExtension
+        arguments:    [%menus%]
+        calls:        [[ setContainer, [ @service_container ] ]]
+        tags:
+          -  { name: twig.extension }

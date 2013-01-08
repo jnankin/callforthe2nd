@@ -1,0 +1,16 @@
+{% extends "HackhousePublicBundle:Email:base.html.twig" %}
+
+{% block subject %}
+    {{ subject }}
+{% endblock %}
+
+{% block body %}
+    Thank you for joining 10minutedose!  This is just a quick email to verify your email address.
+    <br><br>
+    <div style="font-size: 16px; text-align: center">
+        Click the link below to activate your account: <br/>
+        <a href="{{ url('activate', {'userId' : user.id, 'token' : user.activationToken.token }) }}">
+            {{ url('activate', {'userId' : user.id, 'token' : user.activationToken.token }) }}
+        </a>
+    </div>
+{% endblock %}

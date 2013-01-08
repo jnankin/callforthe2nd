@@ -1,0 +1,4 @@
+hackhouse_public:
+    resource: "@HackhousePublicBundle/Controller/"
+    type:     annotation
+    prefix:   /

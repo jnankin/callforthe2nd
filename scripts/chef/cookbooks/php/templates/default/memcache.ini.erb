@@ -1,0 +1,10 @@
+; uncomment the next line to enable the module
+extension=memcache.so
+
+<% if node[:server_env] == 'prod' %>
+session.save_handler = memcache
+memcache.hash_strategy = consistent
+memcache.allow_failover = 1
+memcache.session_redundancy=2
+session.save_path="tcp://db.phaxio.com:11211"
+<% end %>

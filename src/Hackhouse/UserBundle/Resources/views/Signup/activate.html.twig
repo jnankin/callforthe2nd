@@ -1,0 +1,32 @@
+{% extends "HackhousePublicBundle::externalLayout.html.twig" %}
+
+{% block title %}
+    Account Activation
+{% endblock %}
+
+{% block body%}
+<div class="fullsizeContainer">
+    <h1 style="margin-bottom: 30px;">Account Activation</h1>
+
+    {% if success == true %}
+        <h2>
+            You've successfully activated your account!
+            You can now <a href="{{ path('login') }}">login.</a>
+        </h2>
+        <br/><br/>
+        You will be redirected to login in 5 seconds.
+        <script type="text/javascript">
+            setTimeout(function(){
+                location.href = '{{ path('login') }}';
+            }, 5000);
+        </script>
+    {% else %}
+        <h2 style="color: red">
+            Invalid activation code.
+        </h2>
+        <a href="{{ path('resendActivationEmail') }}?userId={{ user.id }}">Click here to send another activation email,</a> or
+        <a href="/contact">get in touch with us.</a>
+    {% endif %}
+</div>
+
+{% endblock %}

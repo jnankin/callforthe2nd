@@ -1,0 +1,40 @@
+name "base"
+description "Base role applied to all nodes."
+run_list(
+  "recipe[apt]",
+  "recipe[acl]",
+  "recipe[build-essential]",
+  "recipe[monit]",
+  "recipe[curl]",
+  "recipe[ecatools]",
+  "recipe[htop]",
+  "recipe[zip]",
+  "recipe[php]",
+  "recipe[beanstalkd]",
+  "recipe[java]",
+  "recipe[php::module_apc]",
+  "recipe[php::module_mysql]",
+  "recipe[php::module_intl]",
+  "recipe[php::module_curl]",
+  "recipe[php::module_xsl]",
+  "recipe[php::module_memcache]",
+  "recipe[php::module_gd]",
+  "recipe[php::module_imagick]",
+  "recipe[php::module_sqlite3]",
+  "recipe[supervisor]",
+  "recipe[mercurial]",
+  "recipe[git]",
+  "recipe[nodejs]",
+  "recipe[coffeescript]",
+  "recipe[sass]",
+  "recipe[compass]",
+  "recipe[tmdInit]"
+)
+override_attributes(
+  :authorization => {
+    :sudo => {
+      :users => ["ubuntu"],
+      :passwordless => true
+    }
+  }
+)

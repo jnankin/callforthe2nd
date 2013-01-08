@@ -1,0 +1,21 @@
+{% extends "HackhousePublicBundle::externalLayout.html.twig" %}
+
+{% block title %}
+    Account Activation
+{% endblock %}
+
+{% block body%}
+<div class="container">
+    <div style="padding: 20px;">
+        <h1 style="margin-bottom: 30px;">Account Activation</h1>
+
+        {% if success == true %}
+            <h2>{{ message }}</h2>
+        {% else %}
+            <h2 style="red">{{ message }}</h2>
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

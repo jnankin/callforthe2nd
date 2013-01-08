@@ -1,0 +1,8 @@
+zend_extension=/usr/lib/php5/20090626/xdebug.so
+
+xdebug.remote_enable=1
+xdebug.remote_handler=dbgp
+xdebug.remote_mode=req
+xdebug.remote_host=<%=  node[:host_local_ip] ? node[:host_local_ip] : '127.0.0.1' %>
+xdebug.remote_port=9001
+;xdebug.remote_autostart=On

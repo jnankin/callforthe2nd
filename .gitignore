@@ -1,0 +1,14 @@
+web/bundles/**
+app/bootstrap/**
+app/cache/**
+app/logs/**
+vendor/**
+nbproject
+*.orig
+Vagrantfile
+.vagrant
+.idea
+web/js/compiled
+web/css/compiled
+app/config/parameters_dev.yml
+bin/*

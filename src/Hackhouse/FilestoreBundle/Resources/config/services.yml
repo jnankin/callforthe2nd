@@ -1,0 +1,5 @@
+services:
+    filestore_manager:
+        class:        Hackhouse\FilestoreBundle\Entity\FilestoreFileManager
+        arguments:    [%filestore.storage_method%, %filestore.bucket_name%, %aws.key%, %aws.secret%, %aws.region%, %aws.object_ttl%]
+        calls: [[ setContainer, [ @service_container ] ]]

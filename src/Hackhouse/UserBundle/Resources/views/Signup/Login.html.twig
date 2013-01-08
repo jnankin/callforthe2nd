@@ -1,0 +1,44 @@
+{% extends "HackhousePublicBundle::externalLayout.html.twig" %}
+
+{% if macro is not defined %}
+    {% import 'HackhousePublicBundle:Form:macro.html.twig' as macro %}
+{% endif %}
+
+{% block title %} Login {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/signup.css') }}" />
+{% endblock %}
+
+{% block body%}
+    <div class="container">
+    LOGIN!!!
+        <div style="padding: 20px;">
+            <h1 style="margin-bottom: 30px;">Login</h1>
+
+            <div class="signupForm signupCol">
+                
+                {{ form_errors(form) }}
+                
+                <form novalidate="novalidate" action="{{ path('login') }}" method="POST">
+                    <div class="fieldRow">
+                        <div class="field short noLabel">
+                            {{ form_widget(form.username, { 'attr': {'title': 'Username', 'class': macro.hasErrors(form.username) } } ) }}
+                            {{ form_errors(form.username) }}
+                        </div>
+                        <div class="field short noLabel">
+                            {{ form_widget(form.password, { 'attr': {'title': 'password', 'class':macro.hasErrors(form.password) } }) }}
+                            {{ form_errors(form.password) }}
+                        </div>    
+                        <div style="clear: both"></div>
+                    </div>
+                                       
+                    <div class="fieldRow">
+                        <button class="button_link btn_green"><span>Login</span></button>
+                    </div>
+                </form>
+            </div>
+
+                
+{% endblock %}

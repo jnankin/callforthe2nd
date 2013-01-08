@@ -1,0 +1,5 @@
+services:
+    job_server:
+        class:        Hackhouse\JobServerBundle\Service\JobServerConnector
+        arguments:    [%jobserver.host%, %jobserver.port%, %jobserver.tube%]
+        calls: [[ setContainer, [ @service_container ] ]]

@@ -1,0 +1,77 @@
+{% extends "HackhousePublicBundle::externalLayout.html.twig" %}
+
+{% block title %} Sign up with 10 Minute Dose {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/signup.css') }}" />
+{% endblock %}
+
+{% block body%}
+<div class="fullsizeContainer">
+    <h1>Create your account right now! It's easy!</h1>
+    <div class="signupForm signupCol">
+        <h2>Sign up with your email address</h2>
+        {{ form_errors(form) }}
+
+        <form class="largeFields" action="{{ path('signup') }}" method="POST">
+            <div class="fieldRow">
+                <div class="field short">
+                    {{ form_widget(form.firstName, { 'attr': {'title': 'First Name', 'class': 'noLabel'} } ) }}
+                    {{ write_form_errors(form.firstName) }}
+                </div>
+                <div class="field short">
+                    {{ form_widget(form.lastName, { 'attr': {'title': 'Last Name', 'class' : 'noLabel'} }) }}
+                    {{ write_form_errors(form.lastName) }}
+                </div>
+                <div style="clear: both"></div>
+            </div>
+            <div class="fieldRow">
+                <div class="field">
+                    {{ form_widget(form.email, { 'attr': {'title': 'Email', 'class' : 'noLabel'} }) }}
+                    {{ write_form_errors(form.email) }}
+                </div>
+                <div style="clear: both"></div>
+            </div>
+            <div class="fieldRow">
+                <div class="field">
+                    {{ form_widget(form.password.first, { 'attr': {'title': 'Password', 'class': 'noLabel'} }) }}
+                    {{ write_form_errors(form.password.first) }}
+                </div>
+                <div style="clear: both"></div>
+            </div>
+            <div class="fieldRow">
+                <div class="field">
+                    {{ form_widget(form.password.second, { 'attr': {'title': 'Confirm Password', 'class': 'noLabel'} }) }}
+                    {{ write_form_errors(form.password.second) }}
+                </div>
+                <div style="clear: both"></div>
+            </div>
+            {{ form_rest(form) }}
+            <div class="fieldRow">
+                <button class="btn btn-large btn-success">Create Account</button>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="orDivider signupCol">
+        <div>or</div>
+    </div>
+
+    <div class="oauthButtons signupCol">
+        <h2>Log in with one of these services</h2>
+        <a href="{{ path('oauthRedirectToService', {'service' : 'google' }) }}" class="openIdLoginButton google">
+            &nbsp;
+        </a>
+
+        <br/>
+
+        <a href="{{ path('oauthRedirectToService', {'service' : 'facebook' }) }}" class="openIdLoginButton facebook">
+            &nbsp;
+        </a>
+    </div>
+    <div style="clear: both"></div>
+</div>
+    
+{% endblock %}

@@ -1,0 +1,14 @@
+services:
+  user_manager:
+    class: Hackhouse\UserBundle\Entity\UserManager
+    calls: [[ setContainer, [ @service_container ] ]]
+
+  oauth_user_provider:
+    class: Hackhouse\UserBundle\Security\OAuthUserProvider
+    calls: [[ setContainer, [ @service_container ] ]]
+
+  user_twig_extensions:
+      class:        Hackhouse\UserBundle\Extensions\UserTwigExtension
+      calls:        [[ setContainer, [ @service_container ] ]]
+      tags:
+        -  { name: twig.extension }

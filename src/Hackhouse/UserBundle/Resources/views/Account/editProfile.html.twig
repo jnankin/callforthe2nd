@@ -1,0 +1,211 @@
+{% extends "HackhousePublicBundle::internalLayout.html.twig" %}
+
+{% block title %} Edit Profile {% endblock %}
+
+
+{% block body%}
+<div class="fullsizeContainer noPadding">
+    <div class="sidebar mini shaded" style="min-height: 600px;">
+        <h3 style="margin-top: 20px">Linked accounts</h3>
+
+        <ul class="accountLinkMenu">
+            {% set accountTypes = ['google', 'facebook', 'twitter'] %}
+            {% for accountType in accountTypes %}
+                <li>
+                    <img src="{{ asset("images/icon-#{accountType}.png") }}" />
+
+                    {% if user.onlyHasThirdPartyLogin() == accountType %}
+                        Primary (Add an email to unlink)
+                    {% else %}
+                        {% if user.hasThirdPartyAccountType(accountType) %}
+                            <a href="{{ path('unlinkThirdPartyAccount', {'type' : accountType }) }}" class="btn btn-danger btn-mini">Unlink account</a>
+                        {% else %}
+                            <a href="{{ path('oauthRedirectToService', {'service' : accountType, 'redirect' : path('editProfile') }) }}" class="btn btn-mini">Link account</a>
+                        {% endif %}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+
+        {% if user.onlyHasThirdPartyLogin() == false %}
+            <div class="password">
+                <button type="button" class="change btn btn-primary btn-medium">Change password</button>
+            </div>
+        {% endif %}
+
+    </div>
+    <div class="main_area">
+        <form novalidate="novalidate" method="POST" action="{{ path('editProfile') }}">
+
+            <div class="profilePicWrapper">
+                <div class="profilePic">
+                    <button type="button" class="change btn btn-primary btn-mini">Change</button>
+                    <div class="fader"></div>
+                </div>
+            </div>
+
+            <div class="largeFields" style="float: left">
+                <div class="basicArea">
+                    <div class="basicFieldsWrapper">
+                        <div class="summary">
+                            <h1>
+                                {% if speaker is defined and speaker.prefix is not empty %}
+                                    <span class="prefix">{{ speaker.prefix }} </span>
+                                {% endif %}
+                                <span class="firstName">{{ user.firstName }} </span>
+                                <span class="lastName">{{ user.lastName}}</span>
+
+                                <button type="button" class="btn btn-mini" style="margin: 0px;">
+                                    <i class="icon-pencil"></i>
+                                    Edit
+                                </button>
+                            </h1>
+                            <h2 class="email" style="margin-bottom: 3px;">
+                                {{user.email}}
+                            </h2>
+                            {{ write_flash_block('editProfile') }}
+                        </div>
+                        <div class="fields" style="display: none;">
+                            <div class="fieldRow">
+                                {% if speaker is defined %}
+                                    <div class="field short" style="width: 85px">
+                                        <label>Prefix</label>
+                                        {{ form_widget(speakerForm.prefix, { 'attr' : { 'style' : 'width: 50px; margin-right: 10px;'}} ) }}
+                                        {{ write_form_errors(speakerForm.prefix) }}
+                                    </div>
+                                {% endif %}
+                                <div class="field short" style="width: 160px;">
+                                    <label>First Name</label>
+                                    {{ form_widget(basicAccountForm.firstName, { 'attr' : { 'style' : 'width: 125px; margin-right: 10px;'}}) }}
+                                    {{ write_form_errors(basicAccountForm.firstName) }}
+                                </div>
+                                <div class="field short">
+                                    <label>Last Name</label>
+                                    {{ form_widget(basicAccountForm.lastName) }}
+                                    {{ write_form_errors(basicAccountForm.lastName) }}
+                                </div>
+                                <div style="clear: both"></div>
+                            </div>
+                            <div class="fieldRow">
+                                <div class="field">
+                                    <label>Email</label>
+                                    {{ form_widget(basicAccountForm.email) }}
+                                    {{ write_form_errors(basicAccountForm.email) }}
+                                </div>
+                                <div style="clear: both"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fieldRow">
+                    <div class="field short topLabel">
+                        <label>Phone Number</label>
+                        {{ form_widget(basicAccountForm.phoneNumber, { 'attr' : {'class' : 'phone'}} ) }}
+                        {{ write_form_errors(basicAccountForm.phoneNumber) }}
+                    </div>
+                    <div class="field short">
+                        <label>Timezone</label>
+                        {{ form_widget(basicAccountForm.timezone) }}
+                        {{ write_form_errors(basicAccountForm.timezone) }}
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
+
+                {% if speakerForm is defined %}
+                    <div class="fieldRow">
+                        <div class="field short">
+                            <label>Organization Name</label>
+                            {{ form_widget(speakerForm.organizationName) }}
+                            {{ write_form_errors(speakerForm.organizationName) }}
+                        </div>
+                        <div class="field short topLabel">
+                            <label>Organization Url</label>
+                            {{ form_widget(speakerForm.organizationUrl, {'attr' : {'class' : 'url'}}) }}
+                            {{ write_form_errors(speakerForm.organizationUrl) }}
+                        </div>
+                        <div style="clear: both"></div>
+                    </div>
+
+                    <div class="fieldRow">
+                        <div class="field">
+                            <label>Title at Organization</label>
+                            {{ form_widget(speakerForm.title) }}
+                            {{ write_form_errors(speakerForm.title) }}
+                        </div>
+                        <div style="clear: both"></div>
+                    </div>
+
+                    <div class="fieldRow">
+                        <div class="field">
+                            <label>Short Bio</label>
+                            {{ form_widget(speakerForm.bio) }}
+                            <div class="charcount" rel="#speaker_bio"></div>
+                            {{ write_form_errors(speakerForm.bio) }}
+                        </div>
+                        <div style="clear: both"></div>
+                    </div>
+                {% endif %}
+
+                <div class="fieldRow">
+                    <div class="field">
+                        {% if inviteCode is defined %}
+                            <input type="submit" class="btn btn-large" name="update" value="Update Profile" />
+                            <input type="submit" class="btn btn-success btn-large" name="updateAndRecord" value="Looks good!  Let's record my talk!" />
+                        {% else %}
+                            <button type="submit" class="btn btn-success btn-large">Save</button>
+                        {% endif %}
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
+
+
+                {% if inviteCode is defined %}
+                    <input type="hidden" name="inviteCode" value="{{ inviteCode }}" />
+                {% endif %}
+            </div>
+        </form>
+    </div>
+    <div style="clear: both"></div>
+</div>
+
+{% endblock %}
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        Hackhouse.urls.changeProfilePic = '{{ path('changeProfilePic') }}';
+        Hackhouse.urls.changePassword = '{{ path('changePassword') }}';
+    </script>
+    <script type="text/javascript" src="{{ asset('js/editProfile.js') }}"></script>
+
+    {% if app.request.isMethod('get') and app.request.query.has('inviteCode') and not app.request.query.has('updated') %}
+        <div id="inviteModal" class="modal fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Welcome to 10 Minute Dose!</h3>
+            </div>
+            <div class="modal-body">
+                <p align="center" style="font-size: 14px; font-weight:500">
+                    Please preview the information we've included in your profile.<br/>
+                    After you accept the information we've provided you can record your talk.
+                    <br/><br/>
+                    <button type="button" data-dismiss="modal" class="btn btn-success btn-large">
+                        Preview my new profile
+                    </button>
+                </p>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $().ready(function(){
+                $('#inviteModal').modal({
+                    'show' : true,
+                    'backdrop' : true
+                });
+            });
+        </script>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,49 @@
+<div class="loginForm loginCol">
+    {% if error %}
+        <div class="errorMessage">{{ error }}</div>
+    {% endif %}
+
+    <form class="largeFields" action="{{ path('processLogin') }}" method="POST">
+        <div class="fieldRow">
+            <div class="field">
+                <label>Email</label>
+                <input type="text" id="username" name="_username" value="{{ last_username }}" />
+            </div>
+            <div style="clear: both"></div>
+        </div>
+        <div class="fieldRow" style="margin-bottom: 0px;">
+            <div class="field">
+                <label>Password</label>
+                <input type="password" id="password" name="_password" />
+                <p align="right"><a href="{{ 'resetPassword' }}">Forgot it?</a></p>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+
+        <input type="hidden" name="_target_path" value="{{ targetPath }}" />
+
+        <div class="fieldRow">
+            <button type="submit" class="btn btn-success btn-large" style="width: 100px"><span>Login</span></button>
+            &nbsp;
+            <input type="checkbox" id="remember_me" name="_remember_me" checked />
+            Keep me logged in
+        </div>
+    </form>
+</div>
+
+<div class="orDivider loginCol">
+    <div>or</div>
+</div>
+
+
+<div class="oauthButtons loginCol">
+    <a href="{{ path('oauthRedirectToService', {'service' : 'google', 'redirect' : targetPath }) }}" class="openIdLoginButton google">
+        &nbsp;
+    </a>
+
+    <br/>
+
+    <a href="{{ path('oauthRedirectToService', {'service' : 'facebook', 'redirect' : targetPath }) }}" class="openIdLoginButton facebook">
+        &nbsp;
+    </a>
+</div>

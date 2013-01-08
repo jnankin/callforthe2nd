@@ -1,0 +1,7 @@
+services:
+    hackhouse_twig_extensions:
+        class:        Hackhouse\TwigExtensionsBundle\Extensions\HackhouseTwigExtension
+        arguments:    [%menus%]
+        calls:        [[ setContainer, [ @service_container ] ]]
+        tags:
+          -  { name: twig.extension }
